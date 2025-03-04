@@ -4,14 +4,14 @@
 
 ### Add a migration
 ```bash
-dotnet ef migrations add AddIdentityModel --project TodoApp.MVC --startup-project TodoApp.MVC --context TodoAppDbContext --output-dir Migrations
+dotnet ef migrations add AddCategoryAndTodoModel --project TodoApp.Data --startup-project TodoApp.MVC --context TodoAppDbContext --output-dir Migrations
 dotnet ef migrations add [MigrationName] --project TodoApp.MVC --startup-project TodoApp.MVC --context TodoAppDbContext --output-dir Migrations
 dotnet ef migrations add [MigrationName] --project TodoApp.Data --startup-project TodoApp.MVC --context StorageDbContext --output-dir Migrations/Storage
 ```
 
 ### Update the database
 ```bash
-dotnet ef database update --project TodoApp.MVC --startup-project TodoApp.MVC --context TodoAppDbContext
+dotnet ef database update --project TodoApp.Data --startup-project TodoApp.MVC --context TodoAppDbContext
 dotnet ef database update --project TodoApp.Data --startup-project TodoApp.MVC --context StorageDbContext
 ```
 

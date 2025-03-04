@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using TodoApp.Business.Services.Category;
 using TodoApp.Data;
+using TodoApp.Repositories;
+using TodoApp.UnitOfWork;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,17 @@ builder.Services.AddDbContext<TodoAppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("TodoAppDbConnection"));
 });
+
+// Add Repositories
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+// Add UnitOfWork
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+// Register MediatoR
+builder.Services.AddMediatR(cfg => 
+    cfg.RegisterServicesFromAssembly(typeof(CategoryGetAllQuery).Assembly));
 
 var app = builder.Build();
 
@@ -35,4 +49,4 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 
-app.Run();
+await app.RunAsync();

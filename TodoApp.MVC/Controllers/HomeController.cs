@@ -1,5 +1,8 @@
 using System.Diagnostics;
+using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TodoApp.Business.Services.Category;
 using TodoApp.MVC.Models;
 
 namespace TodoApp.MVC.Controllers;
@@ -7,15 +10,22 @@ namespace TodoApp.MVC.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly IMediator _mediator;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(
+        ILogger<HomeController> logger, 
+        IMediator mediator)
     {
         _logger = logger;
+        _mediator = mediator;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var query = new CategoryGetAllQuery();
+        var categories = await _mediator.Send(query);
+        _logger.LogInformation("Getting all categories");
+        return View(categories);
     }
 
     public IActionResult Privacy()

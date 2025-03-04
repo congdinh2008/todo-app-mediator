@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../TodoApp.Business/TodoApp.Business.csproj" />
     <ProjectReference Include="../TodoApp.Data/TodoApp.Data.csproj" />
   </ItemGroup>
 

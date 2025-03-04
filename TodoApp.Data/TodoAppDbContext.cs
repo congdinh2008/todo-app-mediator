@@ -12,4 +12,13 @@ public class TodoAppDbContext : DbContext
     public DbSet<Category> Categories { get; set; }
 
     public DbSet<Todo> Todos { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        // Global filter for soft delete
+        modelBuilder.Entity<Category>().HasQueryFilter(x => !x.DeletedAt.HasValue);
+        modelBuilder.Entity<Todo>().HasQueryFilter(x => !x.DeletedAt.HasValue);
+    }
 }

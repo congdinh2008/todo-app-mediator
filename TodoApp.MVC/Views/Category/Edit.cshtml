@@ -1,0 +1,34 @@
+﻿@model CategoryViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h1>Category Management - @Model.Name</h1>
+    </div>
+    <form action="@Url.Action("Edit", "Category", new { id = Model.Id })" method="post">
+        <div class="card-body">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" asp-for="Name" id="name" placeholder="Category Name">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" rows="3" asp-for="Description"></textarea>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="is-active"
+                    asp-for="IsActive">
+                <label class="form-check-label" for="is-active">
+                    Is Active?
+                </label>
+            </div>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <button class="btn btn-primary" type="submit">
+                <i class="fa-solid fa-save"></i> Save
+            </button>
+        </div>
+    </form>
+</div>

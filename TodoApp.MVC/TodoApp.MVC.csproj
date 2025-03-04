@@ -20,4 +20,8 @@
     <ProjectReference Include="../TodoApp.Data/TodoApp.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views/Category/" />
+  </ItemGroup>
+
 </Project>

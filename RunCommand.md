@@ -14,14 +14,14 @@
     dotnet build
     ```
 
-3. Run ViVuLMS.WebAPI
+3. Run TodoApp.MVC
 
     ```bash
-    dotnet run --project ViVuLMS.WebAPI
+    dotnet run --project TodoApp.MVC
     ```
 
 4. Dotnet Watch
     
     ```bash
-    dotnet watch --project ViVuLMS.WebAPI
+    dotnet watch --project TodoApp.MVC
     ```

@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TodoApp.Business.Services.Category;
+using TodoApp.Business.ViewModels.Category;
 
 namespace TodoApp.MVC.Controllers;
 
@@ -20,6 +21,40 @@ public class CategoryController : Controller
         return View(categories);
     }
 
+    public ActionResult Create()
+    {
+        var categoryViewModel = new CategoryViewModel(){
+            Name = ""
+        };
+        return View(categoryViewModel);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> Create(CategoryViewModel categoryViewModel)
+    {
+        // Validate model
+        if (!ModelState.IsValid)
+        {
+            return View(categoryViewModel);
+        }
+
+        var command = new CategoryCreateCommand {
+            Id = Guid.NewGuid(),
+            Name = categoryViewModel.Name,
+            Description = categoryViewModel.Description,
+            IsActive = categoryViewModel.IsActive,
+        };
+        
+        var result = await _mediator.Send(command);
+
+        if (result)
+        {
+            return RedirectToAction("Index");
+        }
+
+        return BadRequest();
+    }
+
     public async Task<ActionResult> Edit(Guid id)
     {
         var query = new CategoryGetByIdQuery(){
@@ -30,14 +65,22 @@ public class CategoryController : Controller
     }
 
     [HttpPost]
-    public async Task<ActionResult> Edit(CategoryEditCommand request)
+    public async Task<ActionResult> Edit(CategoryViewModel categoryViewModel)
     {
+        // Validate model
         if (!ModelState.IsValid)
         {
-            return View(request);
+            return View(categoryViewModel);
         }
+
+        var command = new CategoryEditCommand {
+            Id = categoryViewModel.Id,
+            Name = categoryViewModel.Name,
+            Description = categoryViewModel.Description,
+            IsActive = categoryViewModel.IsActive,
+        };
         
-        var result = await _mediator.Send(request);
+        var result = await _mediator.Send(command);
 
         if (result)
         {

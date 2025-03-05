@@ -1,9 +1,9 @@
-using System;
 using System.ComponentModel.DataAnnotations;
+using MediatR;
 
-namespace TodoApp.Business.ViewModels.Category;
+namespace TodoApp.Business.Services.Category;
 
-public class CategoryViewModel
+public class CategoryCreateCommand : IRequest<bool>
 {
     [Required(ErrorMessage = "Id is required")]
     public Guid Id { get; set; }
@@ -14,6 +14,6 @@ public class CategoryViewModel
 
     [StringLength(255, ErrorMessage = "Description must be {1} characters")]
     public string? Description { get; set; }
-
+    
     public bool IsActive { get; set; }
 }
